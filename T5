@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+
+struct students {
+	char *familyname;	
+	int groupNumber;
+	int yearofbirth;
+	int grade_physics;
+	int grade_math;
+	int grade_programming;	
+};
+
+void generateName(char *name, int length);
+void printInfo(students *s, int i);
+
+int main(int argc, char** argv) {
+	srand(time(NULL));
+	
+	int Numberofstudents = 20 + rand()%20;
+	
+	students *s = (students *)malloc(Numberofstudents*sizeof(students));
+	for (int i = 0; i < Numberofstudents; i++)
+    {
+		(s + i)->familyname = (char *)malloc(5 * sizeof(char));
+		generateName((s + i)->familyname, 5);
+		
+		(s + i)->groupNumber = 1 + rand()%26;
+		
+		(s + i)->yearofbirth = 1994 + rand()%7;
+		
+		(s + i)->grade_physics = 90 + rand()%11;
+		
+		(s + i)->grade_math = 90 + rand()%11;
+		
+		(s + i)->grade_programming = 90 + rand()%101;
+		
+		printInfo(s, i);			
+	}
+	printf("\n---------------\n");
+	int count=0;
+	int location =1;
+	for (int i = 0; i < Numberofstudents; i++)
+	{
+	    if (((s+i)->grade_math)==95)
+		{
+			count++;			
+		}		
+	}
+	for (int i = 0; i < Numberofstudents; i++)
+	{
+	    if (((s+i)->grade_math)==95)
+		{
+			printf("Student %s at #%d has grade in math 95.\n", (s+i)->familyname, i+1);			
+		}		
+	}
+	printf("Number of students who has grade in math 95 is %d\n", count);
+	if(count==0)
+	    printf("Nobody has grade in math 95");
+	return 0;
+}
+
+
+void generateName(char *name, int length)
+{
+	if (length == 0)
+		length = 1 + rand() % 6;
+
+	for (int i = 0; i < length; i++)
+	{
+		if (i == 0)
+			*(name + i) = (char)(65 + rand() % 24);
+		else
+			*(name + i) = (char)(97 + rand() % 24);
+	}
+	*(name + length) = '\0';
+}
+
+void printInfo(students *s, int i)
+{
+	printf("#%d %s \n", i + 1, (s+i)->familyname);
+	
+	printf(" -- Group number: %d\n", (s+i)->groupNumber);		
+
+	printf(" --> Year of birth: %d\n", (s + i)->yearofbirth);		  
+
+	printf(" --> Grade in physics: %d\n", (s+i)->grade_physics);
+	
+	printf(" --> Grade in math: %d\n", (s+i)->grade_math);
+	
+	printf(" --> Grade in programming: %d\n", (s + i)->grade_programming);		  
+}
+
